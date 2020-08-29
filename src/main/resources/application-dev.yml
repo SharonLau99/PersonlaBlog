@@ -1,0 +1,16 @@
+spring:
+  thymeleaf:
+    #开发者
+    cache: false
+  datasource:
+    username: root
+    password: 19960729
+    url: jdbc:mysql://116.85.70.47:3306/blog?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=FALSE
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    root: info
+    org.sharon: debug
+  file:
+    path: log/blog-dev.log
