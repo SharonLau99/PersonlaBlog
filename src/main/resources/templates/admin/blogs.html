@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!--移动端更好的适应-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/dist/semantic/semantic.min.css">
-    <link rel="stylesheet" href="../static/css/my.css">
+    <link rel="stylesheet" href="../../static/dist/semantic/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/my.css">
     <title>博客管理</title>
 </head>
 <body>
     <!--导航开始--------------------------------------------->
-    <nav class="ui inverted attached segment m-padded-mini m-shadow-small" >
+    <nav th:replace="common.html::menu(1)" class="ui inverted attached segment m-padded-mini m-shadow-small" >
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">管理后台</h2>

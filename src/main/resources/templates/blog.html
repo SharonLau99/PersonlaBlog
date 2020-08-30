@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common.html::common_head(~{::title})">
     <meta charset="UTF-8">
     <!--移动端更好的适应-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./static/dist/semantic/semantic.min.css">
-    <link rel="stylesheet" href="./static/css/typo.css">
-    <link rel="stylesheet" href="./static/css/my.css">
-    <link rel="stylesheet" href="./static/css/my.css">
-    <link rel="stylesheet" href="./static/lib/prism/prism.css">
-    <link rel="stylesheet" href="./static/lib/tocbot/tocbot.css">
+    <link rel="stylesheet" href="../static/dist/semantic/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/typo.css">
+    <link rel="stylesheet" href="../static/css/my.css">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css">
     <title>博客详情</title>
 </head>
 <body>
     <!--导航开始--------------------------------------------->
-    <nav class="ui inverted attached segment m-padded-mini m-shadow-small">
+    <nav th:replace="common.html::menu(1)" class="ui inverted attached segment m-padded-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog</h2>
@@ -347,7 +346,7 @@
     <!-- 右边小工具条结束  ---------------->
 
     <!--底部内容开始-->
-    <footer class="ui inverted vertical segment m-padded-massive">
+    <footer th:replace="common.html::footer" class="ui inverted vertical segment m-padded-massive">
         <div class="ui center aligned container">
             <div class="ui inverted divided stackable grid">
                 <div class="three wide column">
@@ -387,14 +386,16 @@
     </footer>
     <!--底部内容结束------------------------------------------>
 
+    <!--/*/<th:block th:replace="common.html::script">/*/-->
+    <script src="../static/dist/jquery/jquery-3.4.1.min.js"></script>
+    <script src="../static/dist/semantic/semantic.min.js"></script>
+    <script src="../static/lib/scrollTo/scrollTo.min.js"></script>
+    <script src="../static/lib/prism/prism.js"></script>
+    <script src="../static/lib/tocbot/tocbot.js"></script>
+    <script src="../static/lib/qrcode/qrcode.min.js"></script>
+    <script src="../static/lib/waypoints/waypoints.min.js"></script>
+    <!--/*/</th:block>/*/-->
 
-<script src="./static/dist/jquery/jquery-3.4.1.min.js"></script>
-<script src="./static/dist/semantic/semantic.min.js"></script>
-<script src="./static/lib/scrollTo/scrollTo.min.js"></script>
-<script src="./static/lib/prism/prism.js"></script>
-<script src="./static/lib/tocbot/tocbot.js"></script>
-<script src="./static/lib/qrcode/qrcode.min.js"></script>
-<script src="./static/lib/waypoints/waypoints.min.js"></script>
 <script>
     $('.m-menu.m-toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');

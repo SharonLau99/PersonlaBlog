@@ -15,4 +15,9 @@ public class HelloController {
     public String hello() {
         return "index";
     }
+
+    @GetMapping("/blog")
+    public String blog() {
+        return "blog";
+    }
 }
