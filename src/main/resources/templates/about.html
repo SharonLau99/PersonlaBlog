@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common.html::common_head(~{::title})">
+<head th:replace="common.html::head(~{::title})">
     <meta charset="UTF-8">
     <!--移动端更好的适应-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./static/dist/semantic/semantic.min.css">
-    <link rel="stylesheet" href="./static/css/my.css">
+    <link rel="stylesheet" href="../static/dist/semantic/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/my.css">
     <title>关于我</title>
 </head>
 <body>
@@ -33,53 +33,61 @@
         </a>
     </nav>
     <!--导航结束---------------------------------------------->
-
-
-    <!--中间内容开始------------------------------------------>
-    <div class="m-container m-padded-large">
-        <div class="ui container">
-            <div class="ui stackable grid">
-                <div class="eleven wide column">
-                    <div class="ui teal segment">
-                        <img src="./static/images/me.jpg" alt="" class="ui rounded image" />
-                    </div>
-                </div>
-                <div class="five wide column">
-                    <div class="ui top teal attached segment">
-                        <div class="ui center aligned header">关于我</div>
-                    </div>
-                    <div class="ui attached segment">
-                        <p class="m-text">吴慧华，广西科技大学，一个编程的爱好者,广西科技大学，一个编程的爱好者,广西科技大学，一个编程的爱好者</p>
-                        <p class="m-text">吴慧华，广西科技大学，一个编程的爱好者</p>
-                    </div>
-                    <div class="ui attached segment">
-                        <div class="ui orange left pointing basic label m-margin-bottom-small">编程</div>
-                        <div class="ui orange left pointing basic label m-margin-bottom-small">编程</div>
-                        <div class="ui orange left pointing basic label m-margin-bottom-small">编程</div>
-                        <div class="ui orange left pointing basic label m-margin-bottom-small">编程</div>
-                    </div>
-                    <div class="ui attached segment">
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">java</div>
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">python</div>
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">springboot</div>
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">spring</div>
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">mysql</div>
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">springmvc</div>
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">mybatis</div>
-                        <div class="ui teal left pointing basic label m-margin-bottom-small">shiro</div>
-                    </div>
-                    <div class="ui buttom attached segment">
-                        <a href="#" class="ui circular icon buttom m-margin-left-small"><i class="github icon"></i></a>
-                        <a href="#" class="ui wechat circular icon buttom m-margin-left-small"><i class="weixin icon"></i></a>
-                        <a href="#" class="ui qq circular icon buttom m-margin-left-small" data-content="1916339974" data-position="bottom center"><i class="qq icon"></i></a>
-                    </div>
-                    <div class="ui wechatQR flowing popup transition hidden">
-                        <img src="./static/images/wechat.png" class="ui rounded image" style="width: 100px" />
-                    </div>
-                </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!--个人资料描述-->
+    <div class="ui container m-opacity box-shadow-max">
+        <div class="ui segment m-margin-" align="center">
+            <div class="m-margin-top-large" align="center">
+                <img class="ui circular image" align="center" src="/images/me.jpg" style="width: 150px;height: 150px;">
             </div>
+            <div class="m-margin-top-small" style="font-size: x-large;font-family: STSong" align="center">吃虾要去皮</div>
+
+            <div class="m-margin-top" align="center">
+                <a href="#" class="ui wechat circular icon button"><i class="weixin icon"></i></a>
+                <a href="#" class="ui qq circular icon button" data-content="561472019" data-position="bottom center"><i class="qq icon"></i></a>
+                <a href="https://github.com/SharonLau99" target="_blank" class="ui github circular icon button" data-content="点击跳转GitHub" data-position="bottom center"><i class="github icon"></i></a>
+                <a href="#" class="ui email circular icon button" data-content="561472019@qq.com" data-position="bottom center"><i class="envelope  icon"></i></a>
+            </div>
+
+            <div class="ui wechat-qr flowing popup transition hidden">
+                <img src="/images/wechat.jpg" alt="" class="ui rounded image" style="width: 110px">
+                <div align="center">微信</div>
+            </div>
+            <div class="ui qq-qr flowing popup transition hidden">
+                <img src="/images/qq.png" alt="" class="ui rounded image" style="width: 110px">
+                <div align="center">QQ</div>
+            </div>
+            <hr class="m-margin-top-small" style="width: 30%">
+            <br>
+            <div>
+                <p>业余厨师</p>
+                <p>b站vlog断更up主</p>
+                <p>徒步爱好者</p>
+                <p>爱听但从来不在ktv唱的粤语歌忠实粉丝</p>
+                <p>专业是化学</p>
+                <p>爱好是编程</p>
+                <p>当我发现编程的乐趣之后，就像找到了生命中最后一块拼图，整个人都完整了</p>
+                <p>相信热爱和努力会填补我和科班之间的差距</p>
+            </div>
+            <hr class="m-margin-top-large">
+            <br>
+            <div class="eleven wide column">
+                    <img src="/images/harry.jpg" class="ui rounded image">
+            </div>
+            <div class="ui basic m-margin-tb-tiny">
+                <p style="font-size: medium">Love and courage.</p>
+                <p style="font-size: medium">Happy every moment.</p>
+            </div>
+
+            <!--<div class="hiddenDiv"></div>-->
         </div>
     </div>
+
+    <br>
+    <br>
     <!--中间内容结束------------------------------------------>
     <br>
     <!--底部内容开始-->
@@ -89,18 +97,15 @@
                 <div class="three wide column">
                     <div class="ui inverted link list">
                         <div class="item">
-                            <img src="./static/images/wechat.png" class="ui rounded image" alt="" style="width: 110px"/>
+                            <img src="../static/images/wechat.png" class="ui rounded image" alt="" style="width: 110px"/>
                         </div>
 
                     </div>
                 </div>
                 <div class="three wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a class="item" href="#">testXXXXXXXXX</a>
-                        <a class="item" href="#">testXXXXXXXXX</a>
-                        <a class="item" href="#">testXXXXXXXXX</a>
-                        <a class="item" href="#">testXXXXXXXXX</a>
+                    <div class="ui inverted link list" th:fragment="newBlogList">
+                        <a class="item" target="_blank" href="#" th:each="blog : ${newBlogs}" th:text="blog.title" th:href="@{/blog/{id}(id={blog.id})}">testXXXXXXXXX</a>
                     </div>
                 </div>
                 <div class="three wide column">
@@ -112,8 +117,7 @@
                 </div>
                 <div class="seven wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">介绍</h4>
-                    <p class="m-text-thin m-text-spaced m-opacity-mini">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                        XXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">不会写代码的厨子不是一个好的化学生。</p>
                 </div>
 
             </div>
@@ -132,13 +136,23 @@
     $('.m-menu.m-toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
+
+    $('.qq').popup();
+
+    // 显示微信
     $('.wechat').popup({
-       popup : $('.wechatQR'),
-        on : 'hover',
+        popup : $('.wechat-qr'),
         position: 'bottom center'
     });
-    $('.qq').popup();
-    
+
+    // 显示QQ
+    $('.qq').popup({
+        popup : $('.qq-qr'),
+        position: 'bottom center'
+    });
+
+    // 显示邮箱
+    $('.email').popup();
 
 </script>
 </body>

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="common.html::head(~{::title})">
     <meta charset="UTF-8">
     <!--移动端更好的适应-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./static/dist/semantic/semantic.min.css">
-    <link rel="stylesheet" href="./static/css/my.css">
+    <link rel="stylesheet" href="../static/dist/semantic/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/my.css">
     <title>标签</title>
 </head>
 <body>
     <!--导航开始--------------------------------------------->
-    <nav class="ui inverted attached segment m-padded-mini m-shadow-small" >
+    <nav th:replace="common.html::menu(3)" class="ui inverted attached segment m-padded-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog</h2>
@@ -34,9 +34,13 @@
     </nav>
     <!--导航结束---------------------------------------------->
 
-
+    <br>
+    <br>
+    <br>
     <!--中间内容开始------------------------------------------>
     <div class="m-container-small m-padded-large">
+        <input type="hidden" name="tagId" th:value="${activeTagId}">
+        <input type="hidden" name="page">
         <div class="ui container">
             <!--中间内容上面的导航开始 ---->
             <div class="ui top attached segment">
@@ -45,7 +49,7 @@
                         <h3 class="ui teal header">标签</h3>
                     </div>
                     <div class="right aligned column">
-                        共 <h2 class="ui orange header m-inline-block m-text-thin"> 14 </h2> 个
+                        共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${#arrays.length(tags)}"> 14 </h2> 个
                     </div>
                 </div>
             </div>
@@ -53,184 +57,94 @@
 
             <!-- 中间内容 标签的具体内容开始 -->
             <div class="ui attached segment m-padded-large">
-                <a href="#" target="_blank" class="ui teal basic left pointing label m-padded-small">
-                    知识点 <div class="detail">23</div>
-                </a>
-                <a href="#" target="_blank" class="ui basic left pointing large label m-margin-small">
-                    java <div class="detail">2</div>
-                </a>
-                <a href="#" target="_blank" class="ui basic left pointing large label m-margin-small">
-                    c++ <div class="detail">122</div>
-                </a>
-                <a href="#" target="_blank" class="ui basic left pointing large label m-margin-small">
-                    python <div class="detail">12</div>
-                </a>
-                <a href="#" target="_blank" class="ui basic left pointing large label m-margin-small">
-                    C语言 <div class="detail">32</div>
-                </a>
-                <a href="#" target="_blank" class="ui basic left pointing large label m-margin-small">
-                    计算机网络 <div class="detail">65</div>
-                </a>
-                <a href="#" target="_blank" class="ui basic left pointing large label m-margin-small">
-                    网络编程 <div class="detail">6</div>
-                </a>
-                <a href="#" target="_blank" class="ui basic left pointing large label m-margin-small">
-                    计算机组成原理 <div class="detail">8</div>
+                <a href="#" class="ui basic left pointing label m-padded-small" th:each="tag : ${tags}" th:classappend="${tag.id == activeTagId} ? 'teal'" th:text="${tag.name}" th:href="@{/tag/{id}(id=${tag.id})}" >
+                    <span th:text="${tag.name}">知识点</span> <div class="detail" th:text="${blogs}">23</div>
                 </a>
             </div>
             <!-- 中间内容 标签的具体内容结束 -->
 
-            <!-- 中间内容 选中标签的内容开始 -->
-            <div class="ui top attached teal segment">
-                <div class="ui padded segment vertical m-padded-big m-mobile-lr-clear">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">JVM内存模型</h3>
-                            <p class="m-text">&nbsp;&nbsp;&nbsp;最近学习了一下JVM的内存模型，本来想自己写一篇学习心得，总是觉得自己表达不清，然后就从学习资料里复制一段，写到最后发现，基本都是复制的写到最后发现，基本都是复制的</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="./static/images/me.jpg" alt="" class="ui avatar image"/>
-                                                <div class="content"><a href="#" class="header">吴慧华</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i> 2020-01-01
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i> 1000
+            <div id="blogList">
+                <div class="ui top teal attached segment" th:fragment="blogList">
+                    <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${blogs.list}">
+                        <div class="ui middle aligned mobile reversed stackable grid">
+                            <div class="eleven wide column">
+                                <h3 class="ui header"><a href="#" th:href="@{'/blog/'}+${blog.id}" class="m-black"
+                                                         target="_blank" th:text="${blog.title}">JVM内存模型</a></h3>
+                                <p class="m-text" th:text="|${blog.description}......|">&nbsp;&nbsp;&nbsp;最近学习了一下JVM的内存模型，本来想自己写一篇学习心得，总是觉得自己表达不清，然后就从学习资料里复制一段，写到最后发现，基本都是复制的写到最后发现，基本都是复制的</p>
+                                <div class="ui grid">
+                                    <div class="row">
+                                        <div class="eleven wide column">
+                                            <div class="ui mini horizontal link list">
+                                                <div class="item">
+                                                    <img src="../static/images/me.jpg" th:src="@{${blog.user.avatar}}" alt=""
+                                                         class="ui avatar image"/>
+                                                    <div class="content"><a href="#" class="header"
+                                                                            th:text="${blog.user.nickname}">admin</a></div>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="calendar icon"></i><span
+                                                        th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-01-01</span>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="eye icon"></i> <span th:text="${blog.views}">1000</span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="#" target="_blank" th:href="@{/type/{id}(id=${blog.type.id})}"
+                                               class="ui teal basic m-padded-all-mini m-text-thin label"
+                                               th:text="${blog.type.name}">学习笔记</a>
+                                        </div>
                                     </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" target="_blank" class="ui teal basic m-padded-all-mini m-text-thin label">学习笔记</a>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="column">
-                                        <a class="ui mini basic teal left pointing label m-padded-mini m-text-thin">知识点</a>
+                                    <div class="row">
+                                        <div class="column">
+                                            <a class="ui mini basic left pointing label m-padded-mini m-text-thin" th:classappend="${tag.id == activeTagId} ? 'teal'" th:href="@{/tag/{id}(id=${tag.id})}" th:each="tag : ${blog.tags}" th:text="${tag.name}">知识点</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="./static/images/test2.jpg" alt="" class="ui rounded m-image-size-square image">
-                            </a>
-                        </div>
-                    </div>
-                </div>                
-                <div class="ui padded segment vertical m-padded-big m-mobile-lr-clear">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">JVM内存模型</h3>
-                            <p class="m-text">&nbsp;&nbsp;&nbsp;最近学习了一下JVM的内存模型，本来想自己写一篇学习心得，总是觉得自己表达不清，然后就从学习资料里复制一段，写到最后发现，基本都是复制的写到最后发现，基本都是复制的</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="./static/images/me.jpg" alt="" class="ui avatar image"/>
-                                                <div class="content"><a href="#" class="header">吴慧华</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i> 2020-01-01
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i> 1000
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" target="_blank" class="ui teal basic m-padded-all-mini m-text-thin label">学习笔记</a>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="column">
-                                        <a class="ui mini basic teal left pointing label m-padded-mini m-text-thin">知识点</a>
-                                    </div>
-                                </div>
+                            <div class="five wide column">
+                                <a href="#" target="_blank" th:href="@{'/blog/'}+${blog.id}">
+                                    <img src="../static/images/test1.jpg" th:src="@{${blog.firstPicture}}" alt=""
+                                         class="ui rounded m-image-size-square image">
+                                </a>
                             </div>
                         </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="./static/images/test2.jpg" alt="" class="ui rounded m-image-size-square image">
-                            </a>
+                    </div>
+                    <br><br>
+                    <!-- 中间内容底部的翻页效果开始 --->
+                    <div class="ui bottom attached segment" th:if="${blogs.pages} > 1">
+                        <div class="ui middle aligned two column grid">
+                            <div class="column">
+                                <button onclick="changePage(this)" th:attr="page=${blogs.prePage}"
+                                        class="ui mini teal basic button pageBtn" id="prePageBtn"
+                                        th:if="${not blogs.isFirstPage}">上一页
+                                </button>
+                            </div>
+                            <div class="right aligned column">
+                                <button onclick="changePage(this)" th:attr="page=${blogs.nextPage}"
+                                        class="ui mini teal basic button pageBtn" id="nextPageBtn"
+                                        th:if="${not blogs.isLastPage}">下一页
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <!-- 中间内容底部的翻页效果结束 --->
                 </div>
-
-                <div class="ui padded segment vertical m-padded-big m-mobile-lr-clear">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">JVM内存模型</h3>
-                            <p class="m-text">&nbsp;&nbsp;&nbsp;最近学习了一下JVM的内存模型，本来想自己写一篇学习心得，总是觉得自己表达不清，然后就从学习资料里复制一段，写到最后发现，基本都是复制的写到最后发现，基本都是复制的</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="./static/images/me.jpg" alt="" class="ui avatar image"/>
-                                                <div class="content"><a href="#" class="header">吴慧华</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i> 2020-01-01
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i> 1000
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" target="_blank" class="ui teal basic m-padded-all-mini m-text-thin label">学习笔记</a>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="column">
-                                        <a class="ui mini basic teal left pointing label m-padded-mini m-text-thin">知识点</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="./static/images/test2.jpg" alt="" class="ui rounded m-image-size-square image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-            <!-- 中间内容 选中标签的内容结束 -->
-            <!-- 中间内容底部的翻页效果开始 --->
-                <div class="ui bottom attached segment">
-                    <div class="ui middle aligned two column grid">
-                        <div class="column">
-                            <a href="#" class="ui mini teal basic button">上一页</a>
-                        </div>
-                        <div class="right aligned column">
-                            <a href="#" class="ui mini teal basic button">下一页</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 中间内容底部的翻页效果结束 --->
-
+            <!-- 中间内容中间的具体的博客信息结束 -->
         </div>
     </div>
     <!--中间内容结束------------------------------------------>
     <br>
     <!--底部内容开始-->
-    <footer class="ui inverted vertical segment m-padded-massive">
+    <footer th:replace="common.html::footer" class="ui inverted vertical segment m-padded-massive">
         <div class="ui center aligned container">
             <div class="ui inverted divided stackable grid">
                 <div class="three wide column">
                     <div class="ui inverted link list">
                         <div class="item">
-                            <img src="./static/images/wechat.png" class="ui rounded image" alt="" style="width: 110px"/>
+                            <img src="../static/images/wechat.png" class="ui rounded image" alt="" style="width: 110px"/>
                         </div>
 
                     </div>
@@ -265,12 +179,32 @@
     <!--底部内容结束------------------------------------------>
 
 
-<script src="./static/dist/jquery/jquery-3.4.1.min.js"></script>
-<script src="./static/dist/semantic/semantic.min.js"></script>
+    <!--/*/<th:block th:replace="common.html::script">/*/-->
+    <script src="../static/dist/jquery/jquery-3.4.1.min.js"></script>
+    <script src="../static/dist/semantic/semantic.min.js"></script>
+    <script src="../static/lib/scrollTo/scrollTo.min.js"></script>
+    <script src="../static/lib/prism/prism.js"></script>
+    <script src="../static/lib/tocbot/tocbot.js"></script>
+    <script src="../static/lib/qrcode/qrcode.min.js"></script>
+    <script src="../static/lib/waypoints/waypoints.min.js"></script>
+    <!--/*/</th:block>/*/-->
 <script>
     $('.m-menu.m-toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
+
+    function changePage(obj) {
+        $("[name='page']").val($(obj).attr("page"));
+        loadData();
+        return false;
+    }
+
+    function loadData() {
+        $("#blogList").load(/*[[@{/tag}]]*/"/tag", {
+            "pageNo" : $("[name='page']").val(),
+            "id" : $("[name='tagId']").val(),
+        });
+    }
 
 </script>
 </body>

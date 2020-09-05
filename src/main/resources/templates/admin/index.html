@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common.html::head(title)">
+<head th:replace="admin/common.html::head(~{::title})">
     <meta charset="UTF-8">
     <!--移动端更好的适应-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +10,16 @@
 </head>
 <body>
 <!--导航开始--------------------------------------------->
-<nav th:replace="common.html::menu(0)" class="ui inverted attached segment m-padded-mini m-shadow-small">
+<nav th:replace="admin/common.html::menu(0)" class="ui inverted attached segment m-padded-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">管理后台</h2>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>博客</a>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="idea icon"></i>分类</a>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
+            <a href="#" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
+            <a href="#" class="m-item item m-mobile-hide" ><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide" ><i class="tags icon"></i>标签</a>
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
-                    <img class="ui avatar image" src="../../static/images/avatar.jpg">吃虾要去皮
+                    <img class="ui avatar image" src="../../static/images/avatar.jpg" th:src="@{/images/avatar.jpg}">吃虾要去皮
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <a href="#" class="item">修改密码</a>
@@ -36,10 +36,10 @@
     </a>
 </nav>
 <!-- 二级导航 -->
-<div th:replace="common.html::submenu(0)" class="ui attached pointing menu">
+<div th:replace="admin/common.html::submenu(0)" class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="item">发布</a>
+            <a href="#" class="teal item">发布</a>
             <a href="#" class="teal item">列表</a>
         </div>
     </div>
@@ -52,16 +52,16 @@
     <div class="ui container">
         <div class="ui success large message">
             <h3>Hi,</h3>
-            <p>吃虾要去皮，欢迎登录！</p>
+            <span th:text="${#authentication.principal.nickname} + '，欢迎登录！'">吃虾要去皮，欢迎登录！</span>
         </div>
 
-        <img src="../../static/images/me.jpg" alt="" class="ui rounded bordered fluid image">
+        <img src="../../static/images/me.jpg" th:src="@{/images/me.jpg}" alt="" class="ui rounded bordered fluid image">
     </div>
 </div>
 <!--中间内容结束------------------------------------------>
 <br>
 <!--底部内容开始-->
-<footer th:replace="common.html::footer" class="ui inverted vertical segment m-padded-massive">
+<footer th:replace="admin/common.html::footer" class="ui inverted vertical segment m-padded-massive">
     <div class="ui center aligned container">
         <div class="ui inverted divided stackable grid">
             <div class="three wide column">
@@ -102,7 +102,7 @@
 <!--底部内容结束------------------------------------------>
 
 
-<!--/*/<th:block th:replace="common.html::script">/*/-->
+<!--/*/<th:block th:replace="admin/common.html::script">/*/-->
 <script src="./static/dist/jquery/jquery-3.4.1.min.js" th:src="@{/dist/jquery/jquery-3.4.1.min.js}"></script>
 <script src="./static/dist/semantic/semantic.min.js" th:src="@{/dist/semantic/semantic.min.js}"></script>
 <!--/*/</th:block>/*/-->
