@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 名称空间 写接口的全类名 相当于告诉mybatis这个配置文件是实现哪个接口的-->
+<mapper namespace="org.sharon.demo.mapper.TagMapper">
+    <!--    多条件查询-->
+    <select id="getTagsByIdList" resultType="org.sharon.demo.bean.Tag">
+        select * from t_tag
+        where id in
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

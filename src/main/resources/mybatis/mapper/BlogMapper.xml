@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 名称空间 写接口的全类名 相当于告诉mybatis这个配置文件是实现哪个接口的-->
+<mapper namespace="org.sharon.demo.mapper.BlogMapper">
+<!--    多条件查询-->
+    <select id="getBlogByConditions" resultMap="blogResult">
+        select * from t_blog
+        <where>
+            <if test="title != null and title != ''">
+                title like concat("%",#{title},"%")
+            </if>
+            <if test="type != null">
+                and type_id = #{type.id}
+            </if>
+            <if test="recommend == true">
+                and recommend = 1
+            </if>
+        </where>
+    </select>
+
+    <select id="getAllBlogs" resultMap="blogResult">
+        select * from t_blog
+    </select>
+
+    <select id="getBlogById" resultMap="blogResult">
+        select * from t_blog where id = #{id}
+    </select>
+
+    <select id="getBlogByTag" resultMap="blogResult">
+        select * from t_blog where id in (select blog_id from t_blog_tags where tag_id = #{tagId})
+    </select>
+
+    <select id="getRecommendBlogs" resultMap="blogResult">
+        select * from t_blog where recommend = true order by update_time desc limit #{limit};
+    </select>
+
+    <select id="getBlogByTitle" resultMap="blogResult">
+        select * from t_blog where title = #{title}
+    </select>
+
+    <select id="getBlogByYear" resultMap="blogResult">
+        select * from t_blog where YEAR(update_time) = #{year} and published = true order by update_time desc
+    </select>
+
+    <select id="getYears" resultType="long">
+        select YEAR(update_time) from t_blog where published = true group by YEAR(update_time) order by YEAR(update_time) desc
+    </select>
+
+    <select id="getBlogsBySearch" resultMap="blogResult">
+        select * from t_blog
+        <where>
+            <if test="keywords != null and keywords != ''">
+                title like concat("%",#{keywords},"%")
+                or
+                content like concat("%",#{keywords},"%")
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="blogResult" type="org.sharon.demo.bean.Blog">
+        <id property="id" column="id"></id>
+        <association property="type" column="type_id" javaType="org.sharon.demo.bean.Type" select="selectType">
+        </association>
+        <association property="user" column="user_id" javaType="org.sharon.demo.bean.User" select="selectUser">
+        </association>
+        <collection property="tags" column="id" ofType="org.sharon.demo.bean.Tag" javaType="ArrayList" select="selectTags"></collection>
+    </resultMap>
+    
+    <select id="selectType" resultType="org.sharon.demo.bean.Type">
+        select * from t_type where id = #{id}
+    </select>
+
+    <select id="selectTags" resultType="org.sharon.demo.bean.Tag">
+        select * from t_tag where id in (select tag_id id from t_blog_tags where blog_id = #{id})
+    </select>
+
+    <select id="selectUser" resultType="org.sharon.demo.bean.User">
+        select * from t_user where id = #{id}
+    </select>
+</mapper>

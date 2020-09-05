@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common.html::head(~{::title})">
+    <meta charset="UTF-8">
+    <!--移动端更好的适应-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/dist/semantic/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/my.css">
+    <title>标签管理</title>
+</head>
+<body>
+<!--导航开始--------------------------------------------->
+<nav th:replace="admin/common.html::menu(3)" class="ui inverted attached segment m-padded-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">管理后台</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <img class="ui avatar image" src="../../static/images/me.jpg">吃虾要去皮
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">修改密码</a>
+                        <a href="#" class="item">个人信息</a>
+                        <form action="#" th:action="@{/admin/login}" method="post">
+                            <button type="submit" class="item">注销</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="ui m-menu m-toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!-- 二级导航 -->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#"  th:href="@{/admin/tag/input}" class="item">新增</a>
+            <a href="#" th:href="@{/admin/tags}" class="active teal item">列表</a>
+        </div>
+    </div>
+</div>
+<!--导航结束---------------------------------------------->
+
+
+<!--中间内容开始------------------------------------------>
+<div class="m-container-small m-padded-large">
+    <div class="ui container">
+        <div class="ui success message" th:unless="${#strings.isEmpty((message))}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${message}">恭喜，操作成功！</p>
+        </div>
+        <!-- 中间内容搜索结果开始 -->
+        <table class="ui celled table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tag,iterStat : ${page.list}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${tag.name}">springboot开发指南</td>
+                <td>
+                    <a href="#" th:href="@{/admin/tag/edit/(id=${tag.id})}" class="ui mini teal basic button">编辑</a>
+                    <button href="#" th:attr="del_url=@{'/admin/tag/'}+${tag.id}" class="ui mini red basic button deleteBtn">删除</button>
+                </td>
+            </tr>
+            </tbody>
+
+            <!--删除的表单-->
+            <form class="del_form" method="post">
+                <input type="hidden" name="_method" value="delete">
+            </form>
+
+            <!-- 中间内容分页开始 -->
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui mini pagination menu" th:if="${page.pages} > 1">
+                        <a th:href="@{/admin/tags/(pageNo=${page.prePage})}" class="item"
+                           th:if="${not page.isFirstPage}">上一页</a>
+                        <a th:href="@{/admin/tags/(pageNo=${page.nextPage})}" class="item"
+                           th:if="${not page.isLastPage}">下一页</a>
+                    </div>
+                    <a class="ui mini right floated teal basic button" th:href="@{/admin/tag/input}">新增</a>
+                </th>
+            </tr>
+            </tfoot>
+            <!-- 中间内容分页结束 -->
+        </table>
+        <!-- 中间内容搜索结果结束 -->
+
+    </div>
+</div>
+<!--中间内容结束------------------------------------------>
+<br>
+<!--底部内容开始-->
+<footer th:replace="admin/common.html::footer" class="ui inverted vertical segment m-padded-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/wechat.png" class="ui rounded image" alt="" style="width: 110px"/>
+                    </div>
+
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a class="item" href="#">testXXXXXXXXX</a>
+                    <a class="item" href="#">testXXXXXXXXX</a>
+                    <a class="item" href="#">testXXXXXXXXX</a>
+                    <a class="item" href="#">testXXXXXXXXX</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a class="item" href="#">Email: 1916339974@qq.com</a>
+                    <a class="item" href="#">QQ: 1916339974</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">介绍</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+            </div>
+
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright 2019 - 2020 Huihua wu</p>
+    </div>
+</footer>
+<!--底部内容结束------------------------------------------>
+
+
+<!--/*/<th:block th:replace="admin/common.html::script">/*/-->
+<script src="./static/dist/jquery/jquery-3.4.1.min.js" th:src="@{/dist/jquery/jquery-3.4.1.min.js}"></script>
+<script src="./static/dist/semantic/semantic.min.js" th:src="@{/dist/semantic/semantic.min.js}"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    $('.m-menu.m-toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    $('.message .close')
+        .on('click', function () {
+                $(this)
+                    .closest('.message')
+                    .transition('fade');
+            }
+        );
+
+    <!--	设置提交删除表单	-->
+    $(".deleteBtn").click(function () {
+        //删除当前员工
+        $(".del_form").attr("action", $(this).attr("del_url")).submit();
+        return false;
+    })
+
+
+</script>
+</body>
+</html>
