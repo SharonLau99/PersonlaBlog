@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 名称空间 写接口的全类名 相当于告诉mybatis这个配置文件是实现哪个接口的-->
+<mapper namespace="org.sharon.demo.mapper.CommentMapper">
+    <select id="getParentCommentByBlogId" resultMap="commentResult">
+        select * from t_comment where blog_id = #{blogId} and parent_comment_id is null order by create_time asc
+    </select>
+
+    <resultMap id="commentResult" type="org.sharon.demo.bean.Comment">
+        <id property="id" column="id"></id>
+        <association property="blog" column="blog_id" javaType="org.sharon.demo.bean.Blog" select="selectBlog">
+        </association>
+        <association property="parentComment" column="parent_comment_id" javaType="org.sharon.demo.bean.Comment" select="selectComment">
+        </association>
+        <collection property="replyComments" column = "id" ofType="org.sharon.demo.bean.Comment" javaType="ArrayList" select="selectReplyComments"></collection>
+    </resultMap>
+
+    <select id="selectBlog" resultType="org.sharon.demo.bean.Blog">
+        select * from t_blog where id = #{blog_id}
+    </select>
+
+    <select id="selectComment" resultMap="commentResult">
+        select * from t_comment where id = #{parent_comment_id}
+    </select>
+
+    <select id="selectReplyComments" resultMap="commentResult">
+        select * from t_comment where parent_comment_id = #{id} order by create_time asc
+    </select>
+</mapper>
