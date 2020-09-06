@@ -1,18 +1,25 @@
 package org.sharon.demo.bean;
 
-import javax.persistence.*;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 用户实体类，目前只有管理员，后续可以加入普通用户
  * @author sharon
  * @create 2020-08-29-22:23
  */
-@Entity
-@Table(name = "t_user")
+@Component
 public class User {
+
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nickname;
@@ -23,11 +30,16 @@ public class User {
     private Integer type;
     private Timestamp createTime;
     private Timestamp updateTime;
-    @OneToMany(mappedBy = "user")
     private List<Blog> blogs = new ArrayList<>();
 
     public User() {
     }
+
+    public User(long id) {
+        this.id = id;
+    }
+
+
 
     @Override
     public String toString() {

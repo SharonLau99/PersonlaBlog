@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head><head th:replace="common.html::common_head(~{::title})">
+<head><head th:replace="common.html::head(~{::title})">
 <meta charset="UTF-8">
     <!--移动端更好的适应-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
 </head>
 <body>
     <!--导航开始--------------------------------------------->
-    <nav class="ui inverted attached segment m-padded-mini m-shadow-small" >
+    <nav th:replace="common.html::menu(4)" class="ui inverted attached segment m-padded-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog</h2>
@@ -34,7 +34,9 @@
     </nav>
     <!--导航结束---------------------------------------------->
 
-
+    <br>
+    <br>
+    <br>
     <!--中间内容开始------------------------------------------>
     <div class="m-container-small m-padded-large">
         <div class="ui container">
@@ -45,122 +47,34 @@
                         <h3 class="ui teal header">归档</h3>
                     </div>
                     <div class="right aligned column">
-                        共 <h2 class="ui orange header m-inline-block m-text-thin"> 114 </h2> 篇博客
+                        共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${blogCount}"> 114 </h2> 篇博客
                     </div>
                 </div>
             </div>
             <!--中间内容上面的导航结束 ---->
 
             <!-- 中间内容具体内容开始 -->
-            <div class="ui teal segment">
-                <h3 class="ui center aligned header">2017</h3>
-                <div class="ui fluid vertical menu">
-                    <a href="#" target="_blank" class="item">
+            <th:block th:each="item : ${archiveMap}">
+                <div class="ui teal segment">
+                    <h3 class="ui center aligned header" th:text="${item.key}">2017</h3>
+                    <div class="ui fluid vertical menu">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${item.value}">
                         <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
+                            <i class="mini teal circle icon"></i> <span th:text="${blog.title}">c++语言</span>
+                            <div class="ui teal basic left pointing label m-padded-mini" th:text="${#dates.format(blog.updateTime, 'MM-dd')}">9月03日</div>
                         </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui green basic left pointing label m-padded-mini">转载</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
+                            <div class="ui orange basic left pointing label m-padded-mini" th:text="${blog.flag}">原创</div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="ui teal segment">
-                <h3 class="ui center aligned header">2016</h3>
-                <div class="ui fluid vertical menu">
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="ui teal segment">
-                <h3 class="ui center aligned header">2015</h3>
-                <div class="ui fluid vertical menu">
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                    <a href="#" target="_blank" class="item">
-                        <span>
-                            <i class="mini teal circle icon"></i>c++语言
-                            <div class="ui teal basic left pointing label m-padded-mini">9月03日</div>
-                        </span>
-                        <div class="ui orange basic left pointing label m-padded-mini">原创</div>
-                    </a>
-                </div>
-            </div>
-            
+            </th:block>
             <!-- 中间内容具体内容结束 -->
         </div> 
     </div>
     <!--中间内容结束------------------------------------------>
     <br>
     <!--底部内容开始-->
-    <footer class="ui inverted vertical segment m-padded-massive">
+    <footer th:replace="common.html::footer" class="ui inverted vertical segment m-padded-massive">
         <div class="ui center aligned container">
             <div class="ui inverted divided stackable grid">
                 <div class="three wide column">
@@ -200,9 +114,15 @@
     </footer>
     <!--底部内容结束------------------------------------------>
 
-
-<script src="./static/dist/jquery/jquery-3.4.1.min.js"></script>
-<script src="./static/dist/semantic/semantic.min.js"></script>
+    <!--/*/<th:block th:replace="common.html::script">/*/-->
+    <script src="../static/dist/jquery/jquery-3.4.1.min.js"></script>
+    <script src="../static/dist/semantic/semantic.min.js"></script>
+    <script src="../static/lib/scrollTo/scrollTo.min.js"></script>
+    <script src="../static/lib/prism/prism.js"></script>
+    <script src="../static/lib/tocbot/tocbot.js"></script>
+    <script src="../static/lib/qrcode/qrcode.min.js"></script>
+    <script src="../static/lib/waypoints/waypoints.min.js"></script>
+    <!--/*/</th:block>/*/-->
 <script>
     $('.m-menu.m-toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');

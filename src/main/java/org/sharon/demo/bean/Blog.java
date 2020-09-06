@@ -1,6 +1,8 @@
 package org.sharon.demo.bean;
 
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -8,79 +10,57 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Blog实体类
  * @author sharon
  * @create 2020-08-29-22:10
  */
-@Entity
-@Table(name = "t_blog")
+@Component
 public class Blog {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
+    //懒加载，要用到的时候才加载
+    @Basic(fetch = FetchType.LAZY)
     private String content;
     private String firstPicture;
-    private String flag;
+    private String description;
     private Integer views;
+    private String flag;
     private boolean appreciation;
     private boolean shareStatement;
     private boolean commentabled;
     private boolean recommend;
+    private boolean published;
     private Timestamp createTime;
     private Timestamp updateTime;
 
-    @ManyToOne
     private Type type;
 
-    @ManyToMany
     private List<Tag> tags = new ArrayList<>();
+    private String tagIds;
 
-    @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "blog")
     private List<Comment> comments = new ArrayList<>();
 
     public Blog() {
     }
 
-    public User getUser() {
-        return user;
+    public String getFlag() {
+        return flag;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -108,12 +88,12 @@ public class Blog {
         this.firstPicture = firstPicture;
     }
 
-    public String getFlag() {
-        return flag;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getViews() {
@@ -156,7 +136,15 @@ public class Blog {
         this.recommend = recommend;
     }
 
-    public Date getCreateTime() {
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
@@ -164,13 +152,72 @@ public class Blog {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getTagIds() {
+        tagIdsInit();
+        return tagIds;
+    }
+
+    public void setTagIds(String tagIds) {
+        tagIdsInit();
+        this.tagIds = tagIds;
+    }
+
+    public void tagIdsInit() {
+        if (tags != null && tags.size() > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            boolean flag = false;
+            for (Tag tag : tags) {
+                if (flag) {
+                    stringBuilder.append(",");
+                } else {
+                    flag = true;
+                }
+                stringBuilder.append(tag.getId());
+            }
+            tagIds = stringBuilder.toString();
+        }
+    }
+
 
     @Override
     public String toString() {
@@ -179,14 +226,21 @@ public class Blog {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", firstPicture='" + firstPicture + '\'' +
-                ", flag='" + flag + '\'' +
+                ", description='" + description + '\'' +
                 ", views=" + views +
+                ", flag='" + flag + '\'' +
                 ", appreciation=" + appreciation +
                 ", shareStatement=" + shareStatement +
                 ", commentabled=" + commentabled +
                 ", recommend=" + recommend +
+                ", published=" + published +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", tagIds='" + tagIds + '\'' +
+                ", user=" + user +
+                ", comments=" + comments +
                 '}';
     }
 }

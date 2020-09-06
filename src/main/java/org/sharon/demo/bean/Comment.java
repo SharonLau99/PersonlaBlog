@@ -1,46 +1,61 @@
 package org.sharon.demo.bean;
 
-import javax.persistence.*;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 评论实体类
  * @author sharon
  * @create 2020-08-29-22:19
  */
-@Entity
-@Table(name = "t_comment")
+@Component
 public class Comment {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nickName;
+    private String nickname;
     private String email;
     private String content;
     private String avatar;
     private Timestamp createTime;
-    @ManyToOne
     private Blog blog;
 
-    @OneToMany(mappedBy = "parentComment")
     private List<Comment> replyComments = new ArrayList<>();
 
-    @ManyToOne
     private Comment parentComment;
+
+    private boolean adminComment;
 
     public Comment() {
     }
+
+    public boolean isAdminComment() {
+        return adminComment;
+    }
+
+    public void setAdminComment(boolean adminComment) {
+        this.adminComment = adminComment;
+    }
+
 
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", nickName='" + nickName + '\'' +
+                ", nickName='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", content='" + content + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", createTime=" + createTime +
+                ", blog=" + blog +
                 '}';
     }
 
@@ -68,20 +83,20 @@ public class Comment {
         this.blog = blog;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getEmail() {
